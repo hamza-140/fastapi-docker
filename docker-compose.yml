@@ -1,8 +1,8 @@
 services:
   fastapi:
     build: .
-    expose:
-      - 9000
+    ports:
+      - "9000:9000"  # 👈 Add this to expose it outside
 
   nginx:
     image: nginx:alpine
