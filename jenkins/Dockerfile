@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Install Docker CLI & Docker Compose plugin
+# Install Docker CLI and Docker Compose plugin
 RUN apt-get update && \
     apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release && \
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
@@ -11,7 +11,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y docker-ce-cli docker-compose-plugin
 
-# Add Jenkins user to the docker group
-RUN usermod -aG docker jenkins
+# ✅ Create the docker group manually
+RUN groupadd docker && usermod -aG docker jenkins
 
 USER jenkins
