@@ -13,20 +13,19 @@ pipeline {
             }
         }
 
-        stage('Stop Old Containers') {
+        stage('Clean Up Old Containers') {
             steps {
-                echo 'Stopping old containers...'
+                echo 'Stopping and removing old containers (if any)...'
                 bat '''
-                    docker rm -f fastapi-app nginx-proxy || exit 0
-                    docker network prune -f || exit 0
                     docker-compose down --remove-orphans || exit 0
+                    docker container prune -f || exit 0
                 '''
             }
         }
 
-        stage('Build and Run') {
+        stage('Build and Deploy') {
             steps {
-                echo 'Building and running containers...'
+                echo 'Building and running Docker containers...'
                 bat 'docker-compose up -d --build'
             }
         }

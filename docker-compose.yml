@@ -1,13 +1,11 @@
 services:
   fastapi:
     build: .
-    container_name: fastapi-app
     expose:
       - 9000
 
   nginx:
     image: nginx:alpine
-    container_name: nginx-proxy
     ports:
       - "8080:80"
     volumes:
