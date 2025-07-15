@@ -17,7 +17,9 @@ pipeline {
             steps {
                 echo 'Stopping old containers...'
                 bat '''
-                    docker ps -aq --filter "name=fastapi-app" | for /F "tokens=*" %%i in ('more') do docker rm -f %%i
+                    docker rm -f fastapi-app nginx-proxy || exit 0
+                    docker network prune -f || exit 0
+                    docker-compose down --remove-orphans || exit 0
                 '''
             }
         }
