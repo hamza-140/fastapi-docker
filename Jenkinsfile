@@ -16,7 +16,9 @@ pipeline {
         stage('Stop Old Containers') {
             steps {
                 echo 'Stopping old containers...'
-                bat 'docker-compose down || exit 0'
+                bat '''
+                    docker ps -aq --filter "name=fastapi-app" | for /F "tokens=*" %%i in ('more') do docker rm -f %%i
+                '''
             }
         }
 
