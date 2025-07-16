@@ -16,9 +16,9 @@ pipeline {
         stage('Clean Up Old Containers') {
             steps {
                 echo 'Stopping and removing old containers (if any)...'
-                bat '''
-                    docker-compose down --remove-orphans || exit 0
-                    docker container prune -f || exit 0
+                sh '''
+                    docker compose down --remove-orphans || true
+                    docker container prune -f || true
                 '''
             }
         }
@@ -26,7 +26,7 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 echo 'Building and running Docker containers...'
-                bat 'docker-compose up -d --build'
+                sh 'docker compose up -d --build'
             }
         }
     }
